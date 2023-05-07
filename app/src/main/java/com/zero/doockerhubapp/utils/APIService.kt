@@ -1,19 +1,20 @@
 package com.zero.doockerhubapp.utils
 
+import com.google.gson.JsonObject
 import com.zero.doockerhubapp.utils.Constants.Companion.ACCESS_TOKEN
 import com.zero.doockerhubapp.utils.Constants.Companion.LOGIN
 import retrofit2.Response
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
-interface API {
+interface APIService {
 
     @FormUrlEncoded
     @POST(LOGIN)
-    suspend fun postLogin(): Response<String>
+    suspend fun postLogin(): Response<JsonObject>
 
     @POST(ACCESS_TOKEN)
-    suspend fun postFetchToken(): Response<String>
+    suspend fun postFetchToken(): Response<JsonObject>
 
 
 
