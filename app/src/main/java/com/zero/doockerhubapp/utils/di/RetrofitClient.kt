@@ -19,12 +19,7 @@ const val TIMEOUT_IN_SECOND: Long = 15
 @InstallIn(SingletonComponent::class)
 object RetrofitClient {
 
-    fun provideHttpClient(): OkHttpClient {
-        val type = "Bearer"
-        val token = "123"
-        return OkHttpClient.Builder().addInterceptor(TokenInterceptor(type,token)).readTimeout(TIMEOUT_IN_SECOND, TimeUnit.SECONDS)
-            .connectTimeout(TIMEOUT_IN_SECOND, TimeUnit.SECONDS).build()
-    }
+
 
     @Singleton
     @Provides   //IN ORDER TO CREATE A RETROFIT INSTANCE IT IS DEPENDENT ON httpClient AND converterFactory SO HILT SHOULD KNOW TO CREATE THEM FIRST
@@ -36,7 +31,14 @@ object RetrofitClient {
         return Retrofit.Builder().baseUrl(BASE_URL).client(okHttpClient)
             .addConverterFactory(gsonConverterFactory).build()
     }
-
+    @Singleton
+    @Provides
+    fun provideHttpClient(): OkHttpClient {
+        val type = "Bearer"
+        val token = "123"
+        return OkHttpClient.Builder().addInterceptor(TokenInterceptor(type,token)).readTimeout(TIMEOUT_IN_SECOND, TimeUnit.SECONDS)
+            .connectTimeout(TIMEOUT_IN_SECOND, TimeUnit.SECONDS).build()
+    }
 
     @Singleton
     @Provides
