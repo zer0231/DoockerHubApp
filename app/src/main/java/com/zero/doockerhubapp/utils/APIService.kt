@@ -11,7 +11,7 @@ interface APIService {
 
     @FormUrlEncoded
     @POST(LOGIN)
-    suspend fun postLogin(): Response<JsonObject>
+    suspend fun postLogin(username:String,password:String): Response<JsonObject>
 
     @POST(ACCESS_TOKEN)
     suspend fun postFetchToken(): Response<JsonObject>

@@ -3,7 +3,7 @@ package com.zero.doockerhubapp.utils
 class Constants {
 
     companion object {
-        const val USERNAME = "zer0231"
+        const val USERNAME = "zer0231" //Fetch from shared preference
         const val REPO_NAME = "test"
         const val BASE_URL = "https://hub.docker.com/v2/"
         const val LOGIN = "users/login"

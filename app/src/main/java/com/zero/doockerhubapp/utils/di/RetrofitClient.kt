@@ -2,6 +2,7 @@ package com.zero.doockerhubapp.utils.di
 
 import com.zero.doockerhubapp.utils.APIService
 import com.zero.doockerhubapp.utils.Constants.Companion.BASE_URL
+import com.zero.doockerhubapp.utils.TokenInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,7 +20,9 @@ const val TIMEOUT_IN_SECOND: Long = 15
 object RetrofitClient {
 
     fun provideHttpClient(): OkHttpClient {
-        return OkHttpClient.Builder().readTimeout(TIMEOUT_IN_SECOND, TimeUnit.SECONDS)
+        val type = "Bearer"
+        val token = "123"
+        return OkHttpClient.Builder().addInterceptor(TokenInterceptor(type,token)).readTimeout(TIMEOUT_IN_SECOND, TimeUnit.SECONDS)
             .connectTimeout(TIMEOUT_IN_SECOND, TimeUnit.SECONDS).build()
     }
 
@@ -29,6 +32,7 @@ object RetrofitClient {
         okHttpClient: OkHttpClient,
         gsonConverterFactory: GsonConverterFactory
     ): Retrofit {
+
         return Retrofit.Builder().baseUrl(BASE_URL).client(okHttpClient)
             .addConverterFactory(gsonConverterFactory).build()
     }
