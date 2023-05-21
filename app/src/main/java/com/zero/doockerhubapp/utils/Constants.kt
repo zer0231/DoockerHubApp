@@ -10,9 +10,13 @@ class Constants {
         const val ACCESS_TOKEN = "access-tokens"
         const val REPO_DETAIL = "${USERNAME}/repositories"
         const val IMAGE_DETAIL = "${REPO_DETAIL}/${REPO_NAME}/images-summary"
-        const val USERNAME_SP = "username"
+
+        /**--SHARED PREFERENCE CONSTANTS--**/
+
         const val USER_DETAIL = "userDetail"
+        const val USERNAME_SP = "username"
         const val TOKEN_SP = "token"
         const val PERSONAL_TOKEN_SP = "personalToken"
+        const val PERSONAL_TOKEN_LABEL_SP = "personalTokenLabel"
     }
 }

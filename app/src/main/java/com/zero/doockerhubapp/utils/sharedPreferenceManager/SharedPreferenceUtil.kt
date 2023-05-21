@@ -1,7 +1,7 @@
 package com.zero.doockerhubapp.utils.sharedPreferenceManager
 
 import android.content.Context
-import android.content.SharedPreferences
+import com.zero.doockerhubapp.utils.Constants.Companion.PERSONAL_TOKEN_LABEL_SP
 import com.zero.doockerhubapp.utils.Constants.Companion.PERSONAL_TOKEN_SP
 import com.zero.doockerhubapp.utils.Constants.Companion.TOKEN_SP
 import com.zero.doockerhubapp.utils.Constants.Companion.USERNAME_SP
@@ -16,19 +16,15 @@ class SharedPreferenceUtil @Inject constructor(@ApplicationContext private val c
     private val userSharedPreference =
         context.getSharedPreferences(USER_DETAIL, Context.MODE_PRIVATE)
 
-    fun getSharedPreference():SharedPreferences{
-        return context.getSharedPreferences(USER_DETAIL,Context.MODE_PRIVATE)
-    }
-
 
     fun setUserName(username: String) {
         val editor = userSharedPreference.edit()
-        editor.putString(USERNAME_SP, "N/A")
+        editor.putString(USERNAME_SP, username)
         editor.apply()
     }
 
     fun getUserName(): String? {
-        return userSharedPreference.getString(USERNAME_SP, "N/A")
+        return userSharedPreference.getString(USERNAME_SP, "*")
     }
 
     fun setUserToken(token: String) {
@@ -38,16 +34,26 @@ class SharedPreferenceUtil @Inject constructor(@ApplicationContext private val c
     }
 
     fun getUserToken(): String? {
-        return userSharedPreference.getString(TOKEN_SP, "*****")
+        return userSharedPreference.getString(TOKEN_SP, "*")
     }
 
     fun setPersonalToken(personalToken: String) {
         val editor = userSharedPreference.edit()
-        editor.putString(PERSONAL_TOKEN_SP, "N/A")
+        editor.putString(PERSONAL_TOKEN_SP, personalToken)
         editor.apply()
     }
 
     fun getPersonalToken(): String? {
-        return userSharedPreference.getString(PERSONAL_TOKEN_SP, "******")
+        return userSharedPreference.getString(PERSONAL_TOKEN_SP, "*")
+    }
+
+    fun setPersonalTokenLabel(label: String) {
+        val editor = userSharedPreference.edit()
+        editor.putString(PERSONAL_TOKEN_LABEL_SP, label)
+        editor.apply()
+    }
+
+    fun getPersonalTokenLabel(): String? {
+        return userSharedPreference.getString(PERSONAL_TOKEN_LABEL_SP, "*")
     }
 }

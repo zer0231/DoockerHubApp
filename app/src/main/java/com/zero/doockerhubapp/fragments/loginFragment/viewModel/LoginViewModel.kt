@@ -1,8 +1,9 @@
 package com.zero.doockerhubapp.fragments.loginFragment.viewModel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.JsonObject
 import com.zero.doockerhubapp.fragments.loginFragment.repository.LoginRepository
@@ -14,8 +15,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val repository: LoginRepository
-):ViewModel() {
+    private val repository: LoginRepository,
+    application:Application
+):AndroidViewModel(application) {
 
     private val _loginResponse: MutableLiveData<NetworkResult<JsonObject>> = MutableLiveData()
     val loginResponse: LiveData<NetworkResult<JsonObject>> = _loginResponse

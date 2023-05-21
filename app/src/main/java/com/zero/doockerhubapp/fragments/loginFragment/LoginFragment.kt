@@ -11,11 +11,15 @@ import com.zero.doockerhubapp.databinding.FragmentLoginBinding
 import com.zero.doockerhubapp.fragments.loginFragment.viewModel.LoginViewModel
 import com.zero.doockerhubapp.utils.NetworkResult
 import com.zero.doockerhubapp.utils.sharedPreferenceManager.SharedPreferenceUtil
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
-    private val loginViewModel by viewModels<LoginViewModel>()
+    private val loginViewModel: LoginViewModel by viewModels()
+
     @Inject
     lateinit var userSharedPreferenceUtil: SharedPreferenceUtil
     private val TAG = "LoginFragment"
@@ -27,14 +31,19 @@ class LoginFragment : Fragment() {
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
 
-
-//        fetchData()
+        val userName: String? = userSharedPreferenceUtil.getUserName()
+        if(userName == "*"){
+            binding.button.text = "Login"
+            fetchData()
+        }else{
+            binding.button.text = userName
+        }
         return binding.root
     }
 
     private fun fetchData() {
         val username = "zer0231"
-        val password = "test123"
+        val password = "09spongeb0b"
         loginViewModel.fetchLoginResponse(username, password)
         loginViewModel.loginResponse.observe(viewLifecycleOwner) { result ->  //IN CASE OF ACTIVITY USE `this` INSTEAD OF `viewLifeCycleOwner`
             when (result) {

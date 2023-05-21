@@ -15,17 +15,17 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
-    private val loginViewModel by viewModels<LoginViewModel>()
+//    private val loginViewModel by viewModels<LoginViewModel>()
     val TAG = "MAIN ACTIVITY"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        fetchData()
+//        fetchData()
     }
 
-    private fun fetchData() {
+/*    private fun fetchData() {
         val username = "zer0231"
         val password = "test123"
         loginViewModel.fetchLoginResponse(username, password)
@@ -45,5 +45,5 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-    }
+    }*/
 }
