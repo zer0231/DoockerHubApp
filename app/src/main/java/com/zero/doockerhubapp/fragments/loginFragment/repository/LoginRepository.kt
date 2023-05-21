@@ -16,7 +16,7 @@ class LoginRepository @Inject constructor(private val remoteDataSource: RemoteDa
     APIResponse() {
     suspend fun getLoginResponse(username: String, password: String): Flow<NetworkResult<JsonObject>> {
         return flow {
-            emit(safeApiCall { remoteDataSource.login(username, password) }!!)
+            emit(safeApiCall { remoteDataSource.postLogin(username, password) })
         }.flowOn(Dispatchers.IO)
     }
 }
