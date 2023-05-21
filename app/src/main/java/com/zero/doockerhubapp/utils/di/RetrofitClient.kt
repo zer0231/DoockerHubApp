@@ -22,33 +22,32 @@ object RetrofitClient {
 
 
     @Singleton
-    @Provides   //IN ORDER TO CREATE A RETROFIT INSTANCE IT IS DEPENDENT ON httpClient AND converterFactory SO HILT SHOULD KNOW TO CREATE THEM FIRST
-    fun provideRetrofit(
-        okHttpClient: OkHttpClient,
-        gsonConverterFactory: GsonConverterFactory
-    ): Retrofit {
-
-        return Retrofit.Builder().baseUrl(BASE_URL).client(okHttpClient)
-            .addConverterFactory(gsonConverterFactory).build()
-    }
-    @Singleton
-    @Provides
-    fun provideHttpClient(): OkHttpClient {
-        val type = "Bearer"
-        val token = "123"
-        return OkHttpClient.Builder().addInterceptor(TokenInterceptor(type,token)).readTimeout(TIMEOUT_IN_SECOND, TimeUnit.SECONDS)
-            .connectTimeout(TIMEOUT_IN_SECOND, TimeUnit.SECONDS).build()
-    }
-
-    @Singleton
     @Provides
     fun provideConverterFactory(): GsonConverterFactory = GsonConverterFactory.create()
-
 
     @Singleton
     @Provides
     fun provideApiService(retrofit: Retrofit): APIService = retrofit.create(APIService::class.java)
 
+    @Singleton
+    @Provides
+    fun provideTokenInterceptor():TokenInterceptor = TokenInterceptor()
 
+    @Singleton
+    @Provides
+    fun provideHttpClient(tokenInterceptor: TokenInterceptor): OkHttpClient {
+        return OkHttpClient.Builder().addInterceptor(tokenInterceptor).readTimeout(TIMEOUT_IN_SECOND, TimeUnit.SECONDS)
+            .connectTimeout(TIMEOUT_IN_SECOND, TimeUnit.SECONDS).build()
+    }
+
+    @Singleton
+    @Provides   //IN ORDER TO CREATE A RETROFIT INSTANCE IT IS DEPENDENT ON httpClient AND converterFactory SO HILT SHOULD KNOW TO CREATE THEM FIRST
+    fun provideRetrofit(
+        okHttpClient: OkHttpClient,
+        gsonConverterFactory: GsonConverterFactory
+    ): Retrofit {
+        return Retrofit.Builder().baseUrl(BASE_URL).client(okHttpClient)
+            .addConverterFactory(gsonConverterFactory).build()
+    }
 
 }
