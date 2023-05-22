@@ -3,7 +3,7 @@ package com.zero.doockerhubapp.utils
 import retrofit2.Response
 
 abstract class APIResponse {
-    suspend fun <T> safeApiCall(apiCall: suspend () -> Response<T>): NetworkResult<T>? {
+    suspend fun <T> safeApiCall(apiCall: suspend () -> Response<T>): NetworkResult<T> {
         try {
             val response = apiCall()
             if (response.isSuccessful) {
