@@ -6,6 +6,7 @@ import com.zero.doockerhubapp.utils.Constants.Companion.PERSONAL_TOKEN_SP
 import com.zero.doockerhubapp.utils.Constants.Companion.TOKEN_SP
 import com.zero.doockerhubapp.utils.Constants.Companion.USERNAME_SP
 import com.zero.doockerhubapp.utils.Constants.Companion.USER_DETAIL
+import com.zero.doockerhubapp.utils.Constants.Companion.UUID_SP
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -55,5 +56,19 @@ class SharedPreferenceUtil @Inject constructor(@ApplicationContext private val c
 
     fun getPersonalTokenLabel(): String? {
         return userSharedPreference.getString(PERSONAL_TOKEN_LABEL_SP, "*")
+    }
+
+    fun clearUserData() {
+        val editor = userSharedPreference.edit().clear()
+        editor.apply()
+    }
+    fun getUUID(): String?{
+        return userSharedPreference.getString(UUID_SP,"*")
+    }
+
+    fun setUUID(uuid:String){
+        val editor = userSharedPreference.edit()
+        editor.putString(UUID_SP,uuid)
+        editor.apply()
     }
 }
