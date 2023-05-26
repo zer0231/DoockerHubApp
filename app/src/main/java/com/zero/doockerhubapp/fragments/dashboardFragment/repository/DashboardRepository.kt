@@ -28,7 +28,6 @@ class DashboardRepository @Inject constructor(private val remoteDataSource: Remo
         requestBody.addProperty("token_label", tokenLabel)
         jsonArray.add(scope)
         requestBody.add("scopes", jsonArray)
-        Log.d("TOKEN",requestBody.toString())
         return flow {
             emit(safeApiCall { remoteDataSource.postPersonalToken(requestBody) })
         }.flowOn(Dispatchers.IO)

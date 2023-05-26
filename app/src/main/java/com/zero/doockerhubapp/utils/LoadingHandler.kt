@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.airbnb.lottie.LottieAnimationView
+import com.zero.doockerhubapp.utils.Constants.Companion.ANIMATION_URL
 
 //Requires the parent constraintLayout
 class LoadingHandler(val context: Context, private val constraintLayout: ConstraintLayout) {
@@ -17,7 +18,7 @@ class LoadingHandler(val context: Context, private val constraintLayout: Constra
                 constraintLayout.getChildAt(i).visibility = View.GONE
             }
         }
-        animationView.setAnimationFromUrl("https://assets1.lottiefiles.com/packages/lf20_b88nh30c.json")
+        animationView.setAnimationFromUrl(ANIMATION_URL)
         constraintLayout.addView(animationView)
         animationView.layoutParams.height = MATCH_PARENT
         animationView.layoutParams.width = MATCH_PARENT

@@ -26,15 +26,13 @@ class SplashFragment : Fragment() {
     ): View {
 
         _binding = FragmentSplashscreenBinding.inflate(inflater, container, false)
-        val actionNav: Int = if (sharedPreferenceUtil.getPersonalToken().equals("*")) {
+        val actionNav: Int = if (sharedPreferenceUtil.getUserToken().equals("*")) {
             R.id.action_splashFragment_to_loginFragment
         } else {
             R.id.action_splashFragment_to_dashBoardFragment
         }
         val timer = object : CountDownTimer(2000, 100) {
             override fun onTick(millisUntilFinished: Long) {
-                Toast.makeText(requireContext(), "Loading $millisUntilFinished", Toast.LENGTH_SHORT)
-                    .show()
             }
 
             override fun onFinish() {

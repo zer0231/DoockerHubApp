@@ -5,8 +5,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.zero.doockerhubapp.R
 import com.zero.doockerhubapp.databinding.FragmentLoginBinding
 import com.zero.doockerhubapp.fragments.loginFragment.viewModel.LoginViewModel
 import com.zero.doockerhubapp.utils.NetworkResult
@@ -31,20 +34,17 @@ class LoginFragment : Fragment() {
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
 
-        val userName: String? = userSharedPreferenceUtil.getUserName()
-        if(userName == "*"){
-            binding.button.text = "Login"
-            fetchData()
-        }else{
-            binding.button.text = userName
-        }
+       binding.loginBtn.setOnClickListener{
+           val password = binding.passwordTiet.text.toString()
+           val userName = binding.usernameTiet.text.toString()
+           login(userName,password)
+       }
         return binding.root
     }
 
-    private fun fetchData() {
-        val username = "zer0231"
-        val password = "09spongeb0b"
-        loginViewModel.fetchLoginResponse(username, password)
+    private fun login(userName:String,password:String) {
+
+        loginViewModel.fetchLoginResponse(userName, password)
         loginViewModel.loginResponse.observe(viewLifecycleOwner) { result ->  //IN CASE OF ACTIVITY USE `this` INSTEAD OF `viewLifeCycleOwner`
             when (result) {
                 is NetworkResult.Loading -> {
@@ -52,13 +52,17 @@ class LoginFragment : Fragment() {
                 }
 
                 is NetworkResult.Success -> {
-                    userSharedPreferenceUtil.setUserName(username)
+                    userSharedPreferenceUtil.setUserName(userName)
                     userSharedPreferenceUtil.setUserToken(result.data?.get("token").toString())
-                    Log.d(TAG, result.data.toString())
+                    findNavController().navigate(R.id.action_loginFragment_to_dashBoardFragment)
                 }
 
                 is NetworkResult.Error -> {
+                    Toast.makeText(requireContext(),"${result.message}",Toast.LENGTH_SHORT).show()
                     Log.d(TAG, "${result.message}")
+                    if(result.code == 403){
+                        Log.d(TAG,result.message!!)
+                    }
 
                 }
             }
