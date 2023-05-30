@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">DockerHub</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="remember_you">Remember you?</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
+</resources>
